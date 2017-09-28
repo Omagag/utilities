@@ -1,5 +1,6 @@
 package com.bbva.intranet.utilities.filters;
 
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import java.util.List;
 public class GoogleSessionFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleSessionFilter.class);
+
+    public static final String CURRENT_USER_GAE = "currentUserGAE";
 
     private boolean enableAuthentication;
     private List<String> freeAccessActions;
@@ -55,6 +58,10 @@ public class GoogleSessionFilter implements Filter {
                 boolean authenticated = isAuthenticated(request);
 
                 if (authenticated) {
+                    // Store into Session the User logged on
+                    User currentUserGAE = userService.getCurrentUser();
+                    session.setAttribute(CURRENT_USER_GAE, currentUserGAE);
+
                     chain.doFilter(request, response);
                     return;
                 }
@@ -87,7 +94,7 @@ public class GoogleSessionFilter implements Filter {
         this.enableAuthentication = enableAuthentication;
     }
 
-    public boolean isFreeAction(String action) {
+    private boolean isFreeAction(String action) {
         boolean free = false;
         if (freeAccessActions != null) {
             for (String freeAction : freeAccessActions) {
