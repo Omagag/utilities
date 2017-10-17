@@ -19,9 +19,9 @@ public class BaseRestService {
     protected void printAndNotifyOfException(Exception e, HttpServletResponse response) {
         response.setStatus(501);
         this.serviceResponse = new ServiceResponse();
-        this.serviceResponse.setCode(-1);
+        this.serviceResponse.setCode("-1");
         this.serviceResponse.setMessage("An error has occurred.");
-        this.serviceResponse.setHttpCode(503);
+        this.serviceResponse.setHttpCode("503");
         this.serviceResponse.setHttpMessage("Service Unavailable.");
         e.printStackTrace();
         logger.error(e.getMessage(), e);

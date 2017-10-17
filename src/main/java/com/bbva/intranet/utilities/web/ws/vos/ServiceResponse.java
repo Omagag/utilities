@@ -2,16 +2,31 @@ package com.bbva.intranet.utilities.web.ws.vos;
 
 public class ServiceResponse {
 
-    private Integer code;
+    private String code;
     private String message;
-    private Integer httpCode;
+    private String httpCode;
     private String httpMessage;
 
-    public Integer getCode() {
+    public ServiceResponse() {
+    }
+
+    public ServiceResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ServiceResponse(String code, String message, String httpCode, String httpMessage) {
+        this.code = code;
+        this.message = message;
+        this.httpCode = httpCode;
+        this.httpMessage = httpMessage;
+    }
+
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -23,11 +38,11 @@ public class ServiceResponse {
         this.message = message;
     }
 
-    public Integer getHttpCode() {
+    public String getHttpCode() {
         return httpCode;
     }
 
-    public void setHttpCode(Integer httpCode) {
+    public void setHttpCode(String httpCode) {
         this.httpCode = httpCode;
     }
 
