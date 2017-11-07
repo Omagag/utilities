@@ -30,4 +30,19 @@ public class BaseRestService {
 //        return GsonUtility.objectToJson(serviceResponse);
     }
 
+    protected void exceptionManagement(Exception e, HttpServletResponse response, ServiceResponse serviceResponse) {
+        response.setStatus(503);
+//        ServiceResponse serviceResponse = new ServiceResponse();
+        serviceResponse.setCode("-1");
+        serviceResponse.setMessage("An error has occurred.");
+        serviceResponse.setHttpCode("503");
+        serviceResponse.setHttpMessage("Service Unavailable.");
+        e.printStackTrace();
+        logger.error(e.getMessage(), e);
+        serviceResponse.setMessage(String.format("%s: [%s]", serviceResponse.getMessage(),
+                e.getMessage() != null ? e.getMessage() : e.toString()));
+//        return GsonUtility.objectToJson(serviceResponse);
+//        return serviceResponse;
+    }
+
 }
