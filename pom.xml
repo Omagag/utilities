@@ -54,6 +54,13 @@
     </properties>
 
     <dependencies>
+        <!-- House Made Dependencies -->
+        <dependency>
+            <groupId>com.intranet.seguridad</groupId>
+            <artifactId>seguridad</artifactId>
+            <version>1</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
