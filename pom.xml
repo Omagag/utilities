@@ -59,6 +59,7 @@
             <groupId>com.intranet.seguridad</groupId>
             <artifactId>seguridad</artifactId>
             <version>1</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring -->
