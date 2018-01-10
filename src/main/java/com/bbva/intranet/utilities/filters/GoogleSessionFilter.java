@@ -43,14 +43,13 @@ public class GoogleSessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)res;
         HttpSession session = request.getSession();
 
-        if (enableAuthentication) {
-            // Request uri, ctcPath and actual action
-            String uri = request.getRequestURI();
-            String ctxPath = request.getContextPath();
-            String action = uri.substring(ctxPath.length());
+        // Request uri, ctcPath and actual action
+        String uri = request.getRequestURI();
+        String ctxPath = request.getContextPath();
+        String action = uri.substring(ctxPath.length());
 
-            if (!isFreeAction(action)) {
-
+        if (!isFreeAction(action)) {
+            if (enableAuthentication) {
                 String basePath = String.format("%s/", ctxPath);
                 session.setAttribute("basePath", basePath);
 
