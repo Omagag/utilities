@@ -7,6 +7,8 @@ public class ServiceResponse {
     private String httpCode;
     private String httpMessage;
 
+    private Object data;
+
     public ServiceResponse() {
     }
 
@@ -52,5 +54,13 @@ public class ServiceResponse {
 
     public void setHttpMessage(String httpMessage) {
         this.httpMessage = httpMessage;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }
