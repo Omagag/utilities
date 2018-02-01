@@ -180,6 +180,57 @@ public abstract class HttpClientSimpleUtility implements Serializable {
         return httpResponse;
     }
 
+    public static HttpResponse buildSslRequestPut(HttpClientData httpClientData) throws HttpClientException {
+        HttpResponse httpResponse = null;
+        HttpsURLConnection conn = null;
+        String urlStr = httpClientData.getUrl();
+
+        try {
+            final URL url;
+            if (!httpClientData.isValidateCerts()) {
+                url = trustAndInstallAllCerts(urlStr);
+            } else {
+                url = new URL(urlStr);
+            }
+            logger.info(String.format("PUT SSL Request URL: [%s]", url));
+
+            conn = (HttpsURLConnection) url.openConnection();
+
+            // TODO: Add the capability of Trust in ANY HOST (warning!!!)
+            trustAnyHost(conn, url);
+
+            if (httpClientData.getContentType() != null && !httpClientData.getContentType().isEmpty()) {
+                conn.setRequestProperty("Content-Type", httpClientData.getContentType());
+            }
+            conn.setConnectTimeout(httpClientData.getTimeout());
+            conn.setRequestMethod("PUT");
+            conn.setDoOutput(true);
+
+            fillHeaders(conn, httpClientData.getHeaders());
+
+            sendPayload(conn, httpClientData);
+
+            httpResponse = validateResponse(conn);
+        } catch (UnsupportedEncodingException e) {
+            throwsErrorException(e, urlStr);
+        } catch (ProtocolException e) {
+            throwsErrorException(e, urlStr);
+        } catch (MalformedURLException e) {
+            throwsErrorException(e, urlStr);
+        } catch (IOException e) {
+            throwsErrorException(e, urlStr);
+        } catch (NoSuchAlgorithmException e) {
+            throwsErrorException(e, urlStr);
+        } catch (KeyManagementException e) {
+            throwsErrorException(e, urlStr);
+        } finally {
+            closeHttpURLConnection(conn);
+        }
+
+//        return conn;
+        return httpResponse;
+    }
+
     public static HttpResponse buildRequestDelete(HttpClientData httpClientData) throws HttpClientException {
         HttpResponse httpResponse = null;
         HttpURLConnection conn = null;
