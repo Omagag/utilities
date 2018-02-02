@@ -4,7 +4,7 @@ public class ServiceResponse {
 
     private String code;
     private String message;
-    private String httpCode;
+    private Integer httpCode;
     private String httpMessage;
 
     private Object data;
@@ -17,7 +17,7 @@ public class ServiceResponse {
         this.message = message;
     }
 
-    public ServiceResponse(String code, String message, String httpCode, String httpMessage) {
+    public ServiceResponse(String code, String message, int httpCode, String httpMessage) {
         this.code = code;
         this.message = message;
         this.httpCode = httpCode;
@@ -40,11 +40,11 @@ public class ServiceResponse {
         this.message = message;
     }
 
-    public String getHttpCode() {
+    public Integer getHttpCode() {
         return httpCode;
     }
 
-    public void setHttpCode(String httpCode) {
+    public void setHttpCode(Integer httpCode) {
         this.httpCode = httpCode;
     }
 
