@@ -43,7 +43,7 @@ public abstract class HttpClientUtility implements Serializable {
             return method;
         } catch (URIException e) {
 //            e.printStackTrace();
-            logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", method.getPath()));
+            logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", method.getPath()));
             throw new RestServiceException(e.getMessage());
         }
     }
@@ -72,11 +72,11 @@ public abstract class HttpClientUtility implements Serializable {
             return method;
         } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
-            logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", method.getPath()));
+            logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", method.getPath()));
             throw new RestServiceException(e.getMessage());
         } catch (URIException e) {
 //            e.printStackTrace();
-            logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", method.getPath()));
+            logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", method.getPath()));
             throw new RestServiceException(e.getMessage());
         }
     }
@@ -87,7 +87,7 @@ public abstract class HttpClientUtility implements Serializable {
             client.executeMethod(method);
         } catch (IOException e) {
 //            e.printStackTrace();
-            logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", method.getPath()));
+            logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", method.getPath()));
             throw new RestServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -121,12 +121,12 @@ public abstract class HttpClientUtility implements Serializable {
                         ASOResponse = (ASOResponse) GsonUtility.jsonElementObjectToObject(output, null, ASOResponse.class, null);
                         logger.warn(ASOResponse.toString());
 
-                        errorMsg = String.format("Error has occurred with the services [%s] : ", ASOResponse.toString());
-                        logger.error(String.format("Error in the services: [%s]", method.getPath()));
+                        errorMsg = String.format("Error has occurred with the daos [%s] : ", ASOResponse.toString());
+                        logger.error(String.format("Error in the daos: [%s]", method.getPath()));
                         logger.error(errorMsg);
                         throw new RestServiceException(errorMsg);
                     } else {
-                        errorMsg = String.format("The response of the services [%s] is: [%s]", method.getPath(), method.getStatusLine().toString());
+                        errorMsg = String.format("The response of the daos [%s] is: [%s]", method.getPath(), method.getStatusLine().toString());
                         logger.warn(errorMsg);
                         throw new RestServiceException(errorMsg);
                     }
@@ -139,7 +139,7 @@ public abstract class HttpClientUtility implements Serializable {
                 }
             }*/
         } catch (IOException e) {
-            logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", method.getPath()));
+            logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", method.getPath()));
 
             throw new RestServiceException(e.getMessage());
         }

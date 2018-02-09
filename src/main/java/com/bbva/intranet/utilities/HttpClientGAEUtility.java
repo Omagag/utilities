@@ -1,6 +1,6 @@
 package com.bbva.intranet.utilities;
 
-import com.bbva.intranet.utilities.exceptions.RestServiceException;
+import com.bbva.intranet.exceptions.RestServiceException;
 import com.bbva.intranet.vo.HttpClientData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,7 +246,7 @@ public abstract class HttpClientGAEUtility implements Serializable {
 	}
     
     private static void throwsErrorException(Exception e, String urlStr) throws RestServiceException {
-        logger.error(String.format("A error has occurred at the moment of invoke the services [%s].", urlStr));
+        logger.error(String.format("A error has occurred at the moment of invoke the daos [%s].", urlStr));
         throw new RestServiceException(e.getMessage());
     }
 
