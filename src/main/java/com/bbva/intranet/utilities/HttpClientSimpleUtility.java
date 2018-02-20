@@ -378,7 +378,7 @@ public abstract class HttpClientSimpleUtility implements Serializable {
 	}
 
 	private static void throwsErrorException(Exception e, String urlStr) throws HttpClientException {
-        logger.error(String.format("A error has occurred at the moment of invoke the services <%s>.", urlStr));
+        logger.error(String.format("A error has occurred at the moment of invoke the daos <%s>.", urlStr));
         e.printStackTrace();
         throw new HttpClientException(e.getMessage());
     }
