@@ -120,12 +120,49 @@ public abstract class DateUtility {
 		return null;
 	}
 
-	public static Date addDays(Date date, int dias) {
+	public static Date addDays(Date date, int days) {
 		if (date != null) {
 			DateTime dateTime = new DateTime(date);
-			return dateTime.plusDays(dias).toDate();
+			return dateTime.plusDays(days).toDate();
 		}
 		return null;
+	}
+
+	public static Date addMonth(Date date, int months) {
+		if (date != null) {
+			DateTime dateTime = new DateTime(date);
+			return dateTime.plusMonths(months).toDate();
+		}
+		return null;
+	}
+
+	public static Date addYear(Date date, int years) {
+		if (date != null) {
+			DateTime dateTime = new DateTime(date);
+			return dateTime.plusYears(years).toDate();
+		}
+		return null;
+	}
+
+	public static int daysBetweenTwoDates(Date firstDate, Date lastDate) {
+		int remainedDays = 0;
+
+		if (firstDate != null) {
+			DateTime firstDateTime = new DateTime(firstDate);
+
+			if (lastDate != null && firstDateTime.isBefore(lastDate.getTime())) {
+				DateTime lastDateTime = new DateTime(lastDate);
+				DateTime.Property currentDay = firstDateTime.dayOfYear();
+				DateTime.Property deadLineDay = lastDateTime.dayOfYear();
+				remainedDays = deadLineDay.get() - currentDay.get();
+			} else {
+				remainedDays = -1;
+			}
+		} else {
+			remainedDays = -1;
+		}
+
+		return remainedDays;
 	}
 	
 	public static boolean isCurrentRangeOverlapNewRange(Date currentBegin, Date currentEnd, Date newBegin, Date newEnd) {
