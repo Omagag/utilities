@@ -24,7 +24,7 @@
         <spring-framework.version>3.2.16.RELEASE</spring-framework.version>
 
         <!-- App Engine -->
-        <appengine.version>1.9.32</appengine.version>
+        <appengine.version>1.9.60</appengine.version>
 
         <!-- Thymeleaf -->
         <thymeleaf-version>2.1.4.RELEASE</thymeleaf-version>

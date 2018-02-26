@@ -6,8 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ServiceResponseMessageUtility {
 
+    public static void setResponse(ServiceResponse serviceResponse, String message) {
+        serviceResponse.setData(null);
+        serviceResponse.setHttpCode(HttpServletResponse.SC_OK);
+        serviceResponse.setHttpMessage(null);
+        serviceResponse.setCode("-01");
+        serviceResponse.setMessage(message);
+    }
+
     public static void setResponse(ServiceResponse serviceResponse, ServiceResponseMessage serviceResponseMessage) {
         serviceResponse.setData(null);
+        serviceResponse.setHttpCode(null);
+        serviceResponse.setHttpMessage(null);
         switch (serviceResponseMessage) {
             // General Messages
             case SUCCESS:
@@ -20,8 +30,8 @@ public class ServiceResponseMessageUtility {
                 break;
             case GENERIC_ERROR:
                 serviceResponse.setCode("-01");
-                serviceResponse.setMessage("Generic error has occurred, check logs for more information");
-                serviceResponse.setHttpCode(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                serviceResponse.setMessage("An error has occurred, check logs for more information");
+                serviceResponse.setHttpCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 serviceResponse.setHttpMessage("Service unavailable.");
                 break;
 
@@ -35,6 +45,7 @@ public class ServiceResponseMessageUtility {
             case DATA_BASE_NO_DATA_FOUND:
                 serviceResponse.setCode("-11");
                 serviceResponse.setMessage("No data available.");
+                serviceResponse.setHttpCode(HttpServletResponse.SC_NOT_FOUND);
                 break;
 
         }
