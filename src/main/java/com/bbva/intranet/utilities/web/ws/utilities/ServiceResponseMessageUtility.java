@@ -26,7 +26,7 @@ public class ServiceResponseMessageUtility {
                 break;
             case GENERIC_ERROR:
                 serviceResponse.setCode("-01");
-                serviceResponse.setMessage("An error has occurred, check logs for more information");
+                serviceResponse.setMessage("An error has occurred, check logs for more information.");
                 serviceResponse.setHttpCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 serviceResponse.setHttpMessage("Service unavailable.");
                 break;
