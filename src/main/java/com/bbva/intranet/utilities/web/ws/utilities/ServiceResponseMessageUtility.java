@@ -14,6 +14,14 @@ public class ServiceResponseMessageUtility {
         serviceResponse.setMessage(message);
     }
 
+    public static void setResponse(ServiceResponse serviceResponse, String code, String message) {
+        serviceResponse.setData(null);
+        serviceResponse.setHttpCode(null);
+        serviceResponse.setHttpMessage(null);
+        serviceResponse.setCode(code);
+        serviceResponse.setMessage(message);
+    }
+
     public static void setResponse(ServiceResponse serviceResponse, ServiceResponseMessage serviceResponseMessage) {
         serviceResponse.setData(null);
         serviceResponse.setHttpCode(null);

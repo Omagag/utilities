@@ -2,6 +2,7 @@ package com.bbva.intranet.utilities;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -49,7 +50,15 @@ public abstract class DateUtility {
 		}
 		return null;
 	}
-	
+
+	public static DateTime createDateTimeFromDate(Date date) {
+		DateTime dateTime = null;
+		if (date != null) {
+			dateTime = new DateTime(date);
+		}
+		return dateTime;
+	}
+
 	public static DateTime createDateTimeWithFormat(String format) {
 		DateTime date = new DateTime();
 		
@@ -185,13 +194,13 @@ public abstract class DateUtility {
 	public static boolean isCurrentDateBetweenDate1AndDate2(Date date1, Date date2) {
 		Date currentDate = createDateWithFormat("dd/MM/yyyy");
 		
-		return isDateBetweenData1AndDate2(currentDate, date1, date2);
+		return isDateBetweenBeginDataAndEndDate(currentDate, date1, date2);
 	}
 	
-	public static boolean isDateBetweenData1AndDate2(Date date, Date date1, Date date2) {
+	public static boolean isDateBetweenBeginDataAndEndDate(Date date, Date beginDate, Date endDate) {
 		boolean isRange = false;
 		
-		if (isDate1LessOrEqualThanDate2(date1, date) && isDate1GreaterOrEqualThanDate2(date2, date)) {
+		if (isDate1LessOrEqualThanDate2(beginDate, date) && isDate1GreaterOrEqualThanDate2(endDate, date)) {
 			isRange = true;
 		}
 		
