@@ -102,7 +102,14 @@ public abstract class DateUtility {
 		}
 		return null;
 	}
-	
+
+	public static String convertDateToString(Date date, String format, Locale locale) {
+		if (date != null && format != null) {
+			return convertDateTimeToString(new DateTime(date), format, locale);
+		}
+		return null;
+	}
+
 	public static Date 	convertStringToDate(String strDate, String format) {
 		if (strDate != null && !strDate.equals("")) {
 			return convertStringToDateTime(strDate, format).toDate();
@@ -111,14 +118,29 @@ public abstract class DateUtility {
 	}
 	
 	public static String convertDateTimeToString(DateTime date, String format) {
-		if (date != null && format != null) {
-			sdf = new SimpleDateFormat(format);
-			return sdf.format(date.toDate());
-		}
+//		if (date != null && format != null) {
+//			sdf = new SimpleDateFormat(format);
+//			return sdf.format(date.toDate());
+//		}
+		return convertDateTimeToString(date, format, null);
 		
+//		return null;
+	}
+
+	public static String convertDateTimeToString(DateTime date, String format, Locale locale) {
+		if (date != null && format != null) {
+			if (locale != null) {
+				sdf = new SimpleDateFormat(format, locale);
+				return sdf.format(date.toDate());
+			} else {
+				sdf = new SimpleDateFormat(format);
+				return sdf.format(date.toDate());
+			}
+		}
+
 		return null;
 	}
-	
+
 	public static DateTime convertStringToDateTime(String strDate, String format) {
 		if (strDate != null && !strDate.equals("")) {
             DateTimeFormatter dtf = DateTimeFormat.forPattern(format);

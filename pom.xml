@@ -93,6 +93,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Commons -->
         <dependency>
             <groupId>commons-fileupload</groupId>
