@@ -40,8 +40,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             fillHeaders(conn, httpClientData.getHeaders());
 
             httpResponse = validateResponse(conn);
-        } catch (MalformedURLException e) {
-            throwsErrorException(e, urlStr);
         } catch (IOException e) {
             throwsErrorException(e, urlStr);
         } finally {
@@ -75,12 +73,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             sendPayload(conn, httpClientData);
 
             httpResponse = validateResponse(conn);
-        } catch (UnsupportedEncodingException e) {
-            throwsErrorException(e, urlStr);
-        } catch (ProtocolException e) {
-            throwsErrorException(e, urlStr);
-        } catch (MalformedURLException e) {
-            throwsErrorException(e, urlStr);
         } catch (IOException e) {
             throwsErrorException(e, urlStr);
         } finally {
@@ -123,17 +115,11 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             sendPayload(conn, httpClientData);
 
             httpResponse = validateResponse(conn);
-        } catch (UnsupportedEncodingException e) {
-            throwsErrorException(e, urlStr);
-        } catch (ProtocolException e) {
-            throwsErrorException(e, urlStr);
-        } catch (MalformedURLException e) {
-            throwsErrorException(e, urlStr);
-        } catch (IOException e) {
+        } catch (KeyManagementException e) {
             throwsErrorException(e, urlStr);
         } catch (NoSuchAlgorithmException e) {
             throwsErrorException(e, urlStr);
-        } catch (KeyManagementException e) {
+        } catch (IOException e) {
             throwsErrorException(e, urlStr);
         } finally {
             closeHttpURLConnection(conn);
@@ -165,12 +151,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             sendPayload(conn, httpClientData);
 
             httpResponse = validateResponse(conn);
-        } catch (UnsupportedEncodingException e) {
-            throwsErrorException(e, urlStr);
-        } catch (ProtocolException e) {
-            throwsErrorException(e, urlStr);
-        } catch (MalformedURLException e) {
-            throwsErrorException(e, urlStr);
         } catch (IOException e) {
             throwsErrorException(e, urlStr);
         } finally {
@@ -250,8 +230,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             fillHeaders(conn, httpClientData.getHeaders());
 
             httpResponse = validateResponse(conn);
-        } catch (MalformedURLException e) {
-            throwsErrorException(e, urlStr);
         } catch (IOException e) {
             throwsErrorException(e, urlStr);
         } finally {
@@ -378,7 +356,7 @@ public abstract class HttpClientSimpleUtility implements Serializable {
 	}
 
 	private static void throwsErrorException(Exception e, String urlStr) throws HttpClientException {
-        logger.error(String.format("A error has occurred at the moment of invoke the daos <%s>.", urlStr));
+        logger.error(String.format("A error has occurred at the moment of invoke the services <%s>. Exception: %s", urlStr, e.getMessage()));
         e.printStackTrace();
         throw new HttpClientException(e.getMessage());
     }
