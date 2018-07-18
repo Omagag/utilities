@@ -12,8 +12,8 @@
         <!-- Generic properties -->
         <java.version>1.6</java.version>
         <maven-compiler-version>3.3</maven-compiler-version>
-        <projectVO.build.sourceEncoding>UTF-8</projectVO.build.sourceEncoding>
-        <projectVO.reporting.outputEncoding>UTF-8</projectVO.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Web -->
         <!--<jsp.version>2.2</jsp.version>-->
