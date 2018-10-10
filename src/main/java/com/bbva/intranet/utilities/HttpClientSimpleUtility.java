@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -46,11 +43,9 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             closeHttpURLConnection(conn);
         }
 
-//        return conn;
         return httpResponse;
     }
 
-//    public static HttpURLConnection buildRequestPost(HttpClientData httpClientData) throws HttpClientException {
     public static HttpResponse buildRequestPost(HttpClientData httpClientData) throws HttpClientException {
         HttpResponse httpResponse = null;
         HttpURLConnection conn = null;
@@ -79,7 +74,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             closeHttpURLConnection(conn);
         }
 
-//        return conn;
         return httpResponse;
     }
 
@@ -125,7 +119,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             closeHttpURLConnection(conn);
         }
 
-//        return conn;
         return httpResponse;
     }
 
@@ -207,7 +200,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
             closeHttpURLConnection(conn);
         }
 
-//        return conn;
         return httpResponse;
     }
 
@@ -240,7 +232,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
     }
 
     private static void sendPayload(HttpURLConnection conn, HttpClientData httpClientData) throws HttpClientException {
-//    public static void sendPayload(HttpURLConnection conn, String payload) throws RestServiceException {
         try {
             //
 //            OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
@@ -251,16 +242,17 @@ public abstract class HttpClientSimpleUtility implements Serializable {
                 throw new HttpClientException("Encoding is necessary.");
             }
 
-            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, httpClientData.getEncoding()));
-            writer.write(httpClientData.getPayload());
-            writer.close();
-            wr.close();
+//            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, httpClientData.getEncoding()));
+//            writer.write(httpClientData.getPayload());
+//            writer.close();
+//            wr.close();
 
             // Send the Payload
-//            OutputStream os = conn.getOutputStream();
+            OutputStream os = conn.getOutputStream();
 //            os.write(httpClientData.getPayload().getBytes());
-//            os.close();
+            os.write(httpClientData.getPayload().getBytes(httpClientData.getEncoding()));
+            os.close();
         } catch (IOException e) {
             throwsErrorException(e, httpClientData.getUrl());
         }
@@ -338,7 +330,9 @@ public abstract class HttpClientSimpleUtility implements Serializable {
         conn.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String hostname, SSLSession sslSession) {
-                return hostname.equals(url.getHost());
+//                return hostname.equals(url.getHost());
+                boolean verified = hostname.contains(url.getHost());
+                return verified;
             }
         });
     }
