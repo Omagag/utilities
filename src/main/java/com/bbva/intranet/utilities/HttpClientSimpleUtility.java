@@ -46,6 +46,47 @@ public abstract class HttpClientSimpleUtility implements Serializable {
         return httpResponse;
     }
 
+    public static HttpResponse buildSslRequestGet(HttpClientData httpClientData) throws HttpClientException {
+        HttpResponse httpResponse = null;
+        HttpsURLConnection conn = null;
+        String urlStr = httpClientData.getUrl();
+        try {
+            final URL url;
+            if (!httpClientData.isValidateCerts()) {
+                url = trustAndInstallAllCerts(urlStr);
+            } else {
+                url = new URL(urlStr);
+            }
+            logger.info(String.format("GET SSL Request URL: [%s]", urlStr));
+
+            conn = (HttpsURLConnection) url.openConnection();
+
+            // TODO: Add the capability of Trust in ANY HOST (warning!!!)
+            trustAnyHost(conn, url);
+
+            if (httpClientData.getContentType() != null && !httpClientData.getContentType().isEmpty()) {
+                conn.setRequestProperty("Content-Type", httpClientData.getContentType());
+            }
+            conn.setConnectTimeout(httpClientData.getTimeout());
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+
+            fillHeaders(conn, httpClientData.getHeaders());
+
+            httpResponse = validateResponse(conn);
+        } catch (IOException e) {
+            throwsErrorException(e, urlStr);
+        } catch (NoSuchAlgorithmException e) {
+            throwsErrorException(e, urlStr);
+        } catch (KeyManagementException e) {
+            throwsErrorException(e, urlStr);
+        } finally {
+            closeHttpURLConnection(conn);
+        }
+
+        return httpResponse;
+    }
+
     public static HttpResponse buildRequestPost(HttpClientData httpClientData) throws HttpClientException {
         HttpResponse httpResponse = null;
         HttpURLConnection conn = null;
@@ -77,7 +118,6 @@ public abstract class HttpClientSimpleUtility implements Serializable {
         return httpResponse;
     }
 
-//    public static HttpsURLConnection buildSslRequestPost(HttpClientData httpClientData) throws HttpClientException {
     public static HttpResponse buildSslRequestPost(HttpClientData httpClientData) throws HttpClientException {
         HttpResponse httpResponse = null;
         HttpsURLConnection conn = null;
