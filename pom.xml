@@ -6,7 +6,7 @@
 
     <groupId>com.bbva.intranet</groupId>
     <artifactId>utilities</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <properties>
         <!-- Generic properties -->
@@ -21,11 +21,11 @@
         <servlet.version>2.5</servlet.version>
 
         <!-- Spring -->
-        <spring-framework.version>4.3.10.RELEASE</spring-framework.version>
+        <spring-framework.version>4.3.12.RELEASE</spring-framework.version>
         <!--<spring-framework.version>3.2.16.RELEASE</spring-framework.version>-->
 
         <!-- App Engine -->
-        <appengine.version>1.9.60</appengine.version>
+        <appengine.version>1.9.68</appengine.version>
 
         <!-- Thymeleaf -->
         <thymeleaf-version>2.1.4.RELEASE</thymeleaf-version>
@@ -37,19 +37,19 @@
         <gson-version>2.8.2</gson-version>
 
         <!-- Lombok -->
-        <lombok-version>1.16.4</lombok-version>
-        <lombok-maven-version>1.16.4.1</lombok-maven-version>
+        <lombok-version>1.18.6</lombok-version>
+        <!--<lombok-maven-version>1.16.4.1</lombok-maven-version>-->
 
         <!-- JodaTime -->
-        <jodatime-version>2.8.1</jodatime-version>
+        <jodatime-version>2.10.1</jodatime-version>
 
         <!-- Quartz -->
         <!--<quartz-version>2.2.1</quartz-version>-->
 
         <!-- Logging -->
         <!-- Logging -->
-        <org.slf4j-version>1.7.7</org.slf4j-version>
-        <log4j-version>1.2.17</log4j-version>
+        <org.slf4j-version>1.7.26</org.slf4j-version>
+        <log4j-version>2.11.2</log4j-version>
 
         <!-- Test -->
         <!--<junit.version>4.11</junit.version>-->
