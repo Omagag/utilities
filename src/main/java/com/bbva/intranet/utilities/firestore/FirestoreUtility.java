@@ -32,8 +32,9 @@ public abstract class FirestoreUtility {
         return documentID;
     }
 
-    public static void add(String collectionId, Object data) throws ExecutionException, InterruptedException {
-        add(collectionId, null, data);
+    public static String  add(String collectionId, Object data) throws ExecutionException, InterruptedException {
+        String documentId = add(collectionId, null, data);
+        return documentId;
     }
 
     public static List<FsDocument> findByMultipleFilter(String collectionId, Map<String, Object> fields) throws ExecutionException, InterruptedException {
