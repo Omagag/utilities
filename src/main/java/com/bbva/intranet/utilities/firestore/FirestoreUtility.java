@@ -1,5 +1,6 @@
 package com.bbva.intranet.utilities.firestore;
 
+import com.bbva.intranet.utilities.firestore.exceptions.MultipleDocumentsException;
 import com.bbva.intranet.utilities.firestore.vos.FsDocument;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-
 
 public abstract class FirestoreUtility {
 
@@ -35,6 +35,19 @@ public abstract class FirestoreUtility {
     public static String  add(String collectionId, Object data) throws ExecutionException, InterruptedException {
         String documentId = add(collectionId, null, data);
         return documentId;
+    }
+
+    public static FsDocument findUniqueByMultipleFilter(String collectionId, Map<String, Object> fields) throws ExecutionException, InterruptedException, MultipleDocumentsException {
+        FsDocument fsDocument = null;
+        List<FsDocument> fsDocuments = findByMultipleFilter(collectionId, fields);
+        if (fsDocuments.size() > 1) {
+            throw new MultipleDocumentsException(MultipleDocumentsException.MESSAGE);
+        } else {
+            if (fsDocuments.size() == 1) {
+                fsDocument = fsDocuments.get(0);
+            }
+        }
+        return fsDocument;
     }
 
     public static List<FsDocument> findByMultipleFilter(String collectionId, Map<String, Object> fields) throws ExecutionException, InterruptedException {
