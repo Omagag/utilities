@@ -12,7 +12,6 @@ public class GenericWsPlus extends GenericWs {
                                      MessageSource messageSource, Locale locale) {
         Response response;
         String code = String.format("%s-%s", prefix, codeError.getCode());
-        //String code = String.format("%s",codeError.getCode());
         String message;
         switch (codeError) {
             case GENERIC:
@@ -24,7 +23,6 @@ public class GenericWsPlus extends GenericWs {
                 message = String.format("code.error.%s.%s", prefix, codeError.getCode());
                 break;
         }
-
         response = generateResponse(code,
                 messageSource.getMessage(message, null, locale),
                 e, httpStatusCode);
