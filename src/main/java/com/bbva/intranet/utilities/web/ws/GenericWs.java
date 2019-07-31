@@ -20,6 +20,7 @@ public class GenericWs {
 
     public static final String CHARSET_UTF8 = ";charset=UTF-8";
 
+    @Deprecated
     public Response validateRequestor(String requestor, MessageSource messageSource, Locale locale) {
         Response response = null;
 
