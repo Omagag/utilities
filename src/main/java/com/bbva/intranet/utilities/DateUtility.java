@@ -2,7 +2,6 @@ package com.bbva.intranet.utilities;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -77,13 +76,7 @@ public abstract class DateUtility {
 	}
 
 	public static DateTime createDateTimeWithFormat(DateTime date, String format) {
-		if (date != null && format != null) {
-			sdf = new SimpleDateFormat(format);
-			String srtDate = sdf.format(date.toDate());
-			
-			return convertStringToDateTime(srtDate, format);
-		}
-		return null;
+		return createDateTimeWithFormat(date, format, null);
 	}
 
 	public static DateTime createDateTimeWithFormat(DateTime date, String format, Locale locale) {
@@ -111,12 +104,16 @@ public abstract class DateUtility {
 	}
 
 	public static Date 	convertStringToDate(String strDate, String format) {
+		return convertStringToDate(strDate, format, null);
+	}
+
+	public static Date 	convertStringToDate(String strDate, String format, Locale locale) {
 		if (strDate != null && !strDate.equals("")) {
-			return convertStringToDateTime(strDate, format).toDate();
+			return convertStringToDateTime(strDate, format, locale).toDate();
 		}
 		return null;
 	}
-	
+
 	public static String convertDateTimeToString(DateTime date, String format) {
 //		if (date != null && format != null) {
 //			sdf = new SimpleDateFormat(format);
@@ -131,6 +128,7 @@ public abstract class DateUtility {
 		if (date != null && format != null) {
 			if (locale != null) {
 				sdf = new SimpleDateFormat(format, locale);
+//				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				return sdf.format(date.toDate());
 			} else {
 				sdf = new SimpleDateFormat(format);
@@ -142,12 +140,26 @@ public abstract class DateUtility {
 	}
 
 	public static DateTime convertStringToDateTime(String strDate, String format) {
+		return convertStringToDateTime(strDate, format, null);
+	}
+
+	public static DateTime convertStringToDateTime(String strDate, String format, Locale locale) {
 		if (strDate != null && !strDate.equals("")) {
             DateTimeFormatter dtf = DateTimeFormat.forPattern(format);
-            
-            return DateTime.parse(strDate, dtf);
+			dtf.withZone(DateTimeZone.getDefault());
+
+			if (locale != null) {
+//				dtf.withZone(DateTimeZone.forID("America/Mexico_City"));
+//				dtf.withZone(DateTimeZone.forID("Etc/GMT"));
+//				dtf.withOffsetParsed();
+				dtf.withLocale(locale);
+			}
+
+			DateTime dateTime = DateTime.parse(strDate, dtf);
+			logger.info(String.format("dateTime %s", dateTime.toDate().toString()));
+			return dateTime;
     	}
-		
+
 		return null;
 	}
 
