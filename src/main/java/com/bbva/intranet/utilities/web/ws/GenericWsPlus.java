@@ -2,6 +2,7 @@ package com.bbva.intranet.utilities.web.ws;
 
 import com.bbva.intranet.utilities.web.ws.enums.ResponseCode;
 import com.google.api.client.http.HttpStatusCodes;
+import com.google.gson.GsonBuilder;
 import org.springframework.context.MessageSource;
 
 import javax.ws.rs.core.Response;
@@ -10,8 +11,8 @@ import java.util.logging.Level;
 
 public class GenericWsPlus extends GenericWs {
 
-    protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, int httpStatusCode,
-                                        MessageSource messageSource, Locale locale) {
+    protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, String dateFormat,
+                                        int httpStatusCode, MessageSource messageSource, Locale locale) {
         Response response;
         String code = String.format("%s-%s", prefix, responseCode.getCode());
         //String code = String.format("%s",responseCode.getCode());
@@ -31,19 +32,28 @@ public class GenericWsPlus extends GenericWs {
                 break;
         }
 
-        if (obj instanceof Exception) {
-            Exception e = (Exception) obj;
-            LOGGER.log(Level.WARNING, e.getMessage());
-            response = generateResponse(code,
-                    e.getMessage(),
-                    obj, httpStatusCode);
-        } else {
-            response = generateResponse(code,
-                    messageSource.getMessage(message, null, locale),
-                    obj, httpStatusCode);
+        if (dateFormat != null && !dateFormat.isEmpty()) {
+            gson = new GsonBuilder().setDateFormat(dateFormat).create();
         }
 
+            if (obj instanceof Exception) {
+                Exception e = (Exception) obj;
+                LOGGER.log(Level.WARNING, e.getMessage());
+                response = generateResponse(code,
+                        e.getMessage(),
+                        obj, httpStatusCode);
+            } else {
+                response = generateResponse(code,
+                        messageSource.getMessage(message, null, locale),
+                        obj, httpStatusCode);
+            }
+
         return response;
+    }
+
+    protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, int httpStatusCode,
+                                        MessageSource messageSource, Locale locale) {
+        return generateResponse(prefix, responseCode, obj, null, httpStatusCode, messageSource, locale);
     }
 
 //    protected Response generateResponse(String prefix, ResponseCode responseCode, Exception e, int httpStatusCode,

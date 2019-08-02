@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class GenericWs {
 
-    private static final Gson gson = new Gson();
+    protected static Gson gson = new Gson();
 
 	protected static final Logger LOGGER = Logger.getLogger(GenericWs.class.getName());
 

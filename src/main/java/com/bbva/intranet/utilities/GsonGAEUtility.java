@@ -47,6 +47,17 @@ public abstract class GsonGAEUtility {
         return json;
     }
 
+    public static String objectToJson(Object obj, String dateFormat) {
+        String json;
+
+        Gson gson = new GsonBuilder().setDateFormat(dateFormat).create();
+        json = gson.toJson(obj);
+
+        logger.info(json);
+
+        return json;
+    }
+
     public static Object jsonToObject(String json, String dateFormat, Class clazz) {
         Object obj;
         Gson gson;
