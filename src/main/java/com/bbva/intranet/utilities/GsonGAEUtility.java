@@ -1,8 +1,8 @@
 package com.bbva.intranet.utilities;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
-import com.google.appengine.repackaged.com.google.gson.GsonBuilder;
-import com.google.appengine.repackaged.com.google.gson.JsonElement;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,6 @@ public abstract class GsonGAEUtility {
 
 	private static final Logger logger = LoggerFactory.getLogger(GsonGAEUtility.class);
 
-//    public static void jsonResponse(Object data, HttpServletResponse res) throws IOException {
     public static void jsonResponse(Object data, HttpServletResponse res) {
 		Gson gson = new Gson();
 
@@ -59,6 +58,21 @@ public abstract class GsonGAEUtility {
 
         logger.info(json);
         obj = gson.fromJson(json, clazz);
+
+        return obj;
+    }
+
+    public static Object jsonToObject(String json, String dateFormat, @SuppressWarnings("rawtypes") Type type) {
+        Object obj;
+        Gson gson;
+        if (dateFormat == null) {
+            gson = new GsonBuilder().create();
+        } else {
+            gson = new GsonBuilder().setDateFormat(dateFormat).create();
+        }
+
+        logger.info(json);
+        obj = gson.fromJson(json, type);
 
         return obj;
     }

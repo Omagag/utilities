@@ -5,7 +5,8 @@ public enum ServiceResponseMessage {
     SUCCESS,
     GENERIC_ERROR,
     EMPTY_REQUEST_BODY,
+    JSON_SYNTAX_ERROR,
     DATA_BASE_NO_DATA_FOUND,
-    DATA_DABE_ERROR
+    DATA_BASE_ERROR,
 
 }

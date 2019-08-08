@@ -1,6 +1,6 @@
 package com.bbva.intranet.utilities;
 
-import com.bbva.intranet.exceptions.RestServiceException;
+import com.bbva.intranet.utilities.exceptions.RestServiceException;
 import com.bbva.intranet.vo.HttpClientData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

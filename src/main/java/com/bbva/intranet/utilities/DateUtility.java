@@ -2,6 +2,7 @@ package com.bbva.intranet.utilities;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -49,7 +50,15 @@ public abstract class DateUtility {
 		}
 		return null;
 	}
-	
+
+	public static DateTime createDateTimeFromDate(Date date) {
+		DateTime dateTime = null;
+		if (date != null) {
+			dateTime = new DateTime(date);
+		}
+		return dateTime;
+	}
+
 	public static DateTime createDateTimeWithFormat(String format) {
 		DateTime date = new DateTime();
 		
@@ -93,7 +102,14 @@ public abstract class DateUtility {
 		}
 		return null;
 	}
-	
+
+	public static String convertDateToString(Date date, String format, Locale locale) {
+		if (date != null && format != null) {
+			return convertDateTimeToString(new DateTime(date), format, locale);
+		}
+		return null;
+	}
+
 	public static Date 	convertStringToDate(String strDate, String format) {
 		if (strDate != null && !strDate.equals("")) {
 			return convertStringToDateTime(strDate, format).toDate();
@@ -102,14 +118,29 @@ public abstract class DateUtility {
 	}
 	
 	public static String convertDateTimeToString(DateTime date, String format) {
-		if (date != null && format != null) {
-			sdf = new SimpleDateFormat(format);
-			return sdf.format(date.toDate());
-		}
+//		if (date != null && format != null) {
+//			sdf = new SimpleDateFormat(format);
+//			return sdf.format(date.toDate());
+//		}
+		return convertDateTimeToString(date, format, null);
 		
+//		return null;
+	}
+
+	public static String convertDateTimeToString(DateTime date, String format, Locale locale) {
+		if (date != null && format != null) {
+			if (locale != null) {
+				sdf = new SimpleDateFormat(format, locale);
+				return sdf.format(date.toDate());
+			} else {
+				sdf = new SimpleDateFormat(format);
+				return sdf.format(date.toDate());
+			}
+		}
+
 		return null;
 	}
-	
+
 	public static DateTime convertStringToDateTime(String strDate, String format) {
 		if (strDate != null && !strDate.equals("")) {
             DateTimeFormatter dtf = DateTimeFormat.forPattern(format);
@@ -120,12 +151,49 @@ public abstract class DateUtility {
 		return null;
 	}
 
-	public static Date addDays(Date date, int dias) {
+	public static Date addDays(Date date, int days) {
 		if (date != null) {
 			DateTime dateTime = new DateTime(date);
-			return dateTime.plusDays(dias).toDate();
+			return dateTime.plusDays(days).toDate();
 		}
 		return null;
+	}
+
+	public static Date addMonth(Date date, int months) {
+		if (date != null) {
+			DateTime dateTime = new DateTime(date);
+			return dateTime.plusMonths(months).toDate();
+		}
+		return null;
+	}
+
+	public static Date addYear(Date date, int years) {
+		if (date != null) {
+			DateTime dateTime = new DateTime(date);
+			return dateTime.plusYears(years).toDate();
+		}
+		return null;
+	}
+
+	public static int daysBetweenTwoDates(Date firstDate, Date lastDate) {
+		int remainedDays = 0;
+
+		if (firstDate != null) {
+			DateTime firstDateTime = new DateTime(firstDate);
+
+			if (lastDate != null && firstDateTime.isBefore(lastDate.getTime())) {
+				DateTime lastDateTime = new DateTime(lastDate);
+				DateTime.Property currentDay = firstDateTime.dayOfYear();
+				DateTime.Property deadLineDay = lastDateTime.dayOfYear();
+				remainedDays = deadLineDay.get() - currentDay.get();
+			} else {
+				remainedDays = -1;
+			}
+		} else {
+			remainedDays = -1;
+		}
+
+		return remainedDays;
 	}
 	
 	public static boolean isCurrentRangeOverlapNewRange(Date currentBegin, Date currentEnd, Date newBegin, Date newEnd) {
@@ -148,13 +216,13 @@ public abstract class DateUtility {
 	public static boolean isCurrentDateBetweenDate1AndDate2(Date date1, Date date2) {
 		Date currentDate = createDateWithFormat("dd/MM/yyyy");
 		
-		return isDateBetweenData1AndDate2(currentDate, date1, date2);
+		return isDateBetweenBeginDataAndEndDate(currentDate, date1, date2);
 	}
 	
-	public static boolean isDateBetweenData1AndDate2(Date date, Date date1, Date date2) {
+	public static boolean isDateBetweenBeginDataAndEndDate(Date date, Date beginDate, Date endDate) {
 		boolean isRange = false;
 		
-		if (isDate1LessOrEqualThanDate2(date1, date) && isDate1GreaterOrEqualThanDate2(date2, date)) {
+		if (isDate1LessOrEqualThanDate2(beginDate, date) && isDate1GreaterOrEqualThanDate2(endDate, date)) {
 			isRange = true;
 		}
 		
