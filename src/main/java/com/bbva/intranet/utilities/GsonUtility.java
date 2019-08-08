@@ -41,7 +41,7 @@ public abstract class GsonUtility {
 
     public static String objectToJson(Object obj, String dateFormat) {
         String json;
-
+        logger.info("Tiempo n");
         Gson gson;
         if (dateFormat == null) {
             gson = new GsonBuilder().create();

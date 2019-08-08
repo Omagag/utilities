@@ -69,7 +69,7 @@
     <!--<logger name="org.springframework.core">-->
 		<!--<level value="info" />-->
 	<!--</logger>-->
-	<!--<logger name="org.springframework.beans">-->
+	<!--<logger name="org.springframewvoseans">-->
 		<!--<level value="info" />-->
 	<!--</logger>-->
 	<!--<logger name="org.springframework.context">-->
