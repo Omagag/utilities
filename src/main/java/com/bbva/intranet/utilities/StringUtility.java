@@ -7,7 +7,7 @@ public abstract class StringUtility {
 
     private static final Logger logger = LoggerFactory.getLogger(StringUtility.class);
 
-    private String toLowerCaseAndSlashing(String str) {
+    public static String toLowerCaseAndSlashing(String str) {
 
         str = str.replace(" ", "-");
         str = str.replace("_", "-");
