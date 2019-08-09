@@ -36,17 +36,20 @@ public class GenericWsPlus extends GenericWs {
             gson = new GsonBuilder().setDateFormat(dateFormat).create();
         }
 
-            if (obj instanceof Exception) {
-                Exception e = (Exception) obj;
-                LOGGER.log(Level.WARNING, e.getMessage());
-                response = generateResponse(code,
-                        e.getMessage(),
-                        obj, httpStatusCode);
-            } else {
-                response = generateResponse(code,
-                        messageSource.getMessage(message, null, locale),
-                        obj, httpStatusCode);
-            }
+        if (obj instanceof Exception) {
+            Exception e = (Exception) obj;
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            message = e.getMessage() != null ? e.getMessage() : e.toString();
+            response = generateResponse(code,
+                    message,
+                    obj, httpStatusCode);
+        } else {
+            response = generateResponse(code,
+                    messageSource.getMessage(message, null, locale),
+                    obj, httpStatusCode);
+        }
+
+        LOGGER.info(String.format("code: %s message: %s", code, message));
 
         return response;
     }
