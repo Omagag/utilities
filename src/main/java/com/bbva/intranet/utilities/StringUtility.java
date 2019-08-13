@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.Normalizer;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class StringUtility {
@@ -29,22 +31,23 @@ public abstract class StringUtility {
             str = removeAccents(str);
 
 //        String[] arrayString = str.split("\\s+");
-            String[] arrayString = str.split("[^a-zA-Z0-9\\s]");
+            String[] arrayString = str.split("[^a-zA-Z0-9]");
 
             String array;
             for (int i = 0; i < arrayString.length; i++) {
                 array = arrayString[i];
+                logger.info("array -> " + array);
                 array = array.trim();
-                if (array.equals("")) {
-                    logger.info("not concat -> " + array);
-                } else {
-                    newString = newString.concat(String.format("-%s", array));
-                    logger.info("concat -> " + newString);
+                if (!array.equals("")) {
+                    if(newString.equals("")) {
+                        newString = newString.concat(array);
+                    } else {
+                        newString = newString.concat(String.format("-%s",array));
+                    }
                 }
+                str = newString.toLowerCase();
             }
-            str = newString.toLowerCase();
-
-            logger.info("New string -> " + newString);
+            logger.info("New string -> " + str);
         } else {
             throw new IllegalArgumentException("The string is null or empty.");
         }
@@ -59,4 +62,6 @@ public abstract class StringUtility {
         logger.info("Not accents string -> " + str);
         return str;
     }
+
+
 }
