@@ -5,7 +5,8 @@ public enum ResponseCode {
     SUCCESSFUL("100"),
     GENERIC("200"),
     DATABASE("300"),
-    ENOUGH_DATA("101");
+    ENOUGH_DATA("101"),
+    UNAUTHORIZED("401");
 
     private String code;
 
