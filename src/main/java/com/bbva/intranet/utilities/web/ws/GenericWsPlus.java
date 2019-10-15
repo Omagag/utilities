@@ -14,9 +14,10 @@ public class GenericWsPlus extends GenericWs {
 
     protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, String dateFormat,
                                         int httpStatusCode, MessageSource messageSource, Locale locale) {
-        Response response;
+        if (prefix == null || prefix.isEmpty() || responseCode == null) {
+            throw new IllegalArgumentException("Prefix or responseCode are empty.");
+        }
         String code = String.format("%s-%s", prefix, responseCode.getCode());
-        //String code = String.format("%s",responseCode.getCode());
 
         String message;
         switch (responseCode) {
@@ -35,6 +36,34 @@ public class GenericWsPlus extends GenericWs {
                 message = String.format("code.error.%s.%s", prefix, responseCode.getCode());
                 break;
         }
+
+        return buildResponse(code, message, obj, dateFormat, httpStatusCode, messageSource, locale);
+    }
+
+    protected Response generateResponse(String prefix, String responseCode, Object obj, String dateFormat,
+                                        int httpStatusCode, MessageSource messageSource, Locale locale) {
+        if (prefix == null || prefix.isEmpty() || responseCode == null || responseCode.isEmpty()) {
+            throw new IllegalArgumentException("Prefix or responseCode are empty.");
+        }
+        String code = String.format("%s-%s", prefix, responseCode);
+        String message = String.format("code.error.%s.%s", prefix, responseCode);
+
+        return buildResponse(code, message, obj, dateFormat, httpStatusCode, messageSource, locale);
+    }
+
+    protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, int httpStatusCode,
+                                        MessageSource messageSource, Locale locale) {
+        return generateResponse(prefix, responseCode, obj, null, httpStatusCode, messageSource, locale);
+    }
+
+    protected Response generateResponse(String prefix, String responseCode, Object obj, int httpStatusCode,
+                                        MessageSource messageSource, Locale locale) {
+        return generateResponse(prefix, responseCode, obj, null, httpStatusCode, messageSource, locale);
+    }
+
+    private Response buildResponse(String code, String message, Object obj, String dateFormat,
+                                        int httpStatusCode, MessageSource messageSource, Locale locale) {
+        Response response;
 
         if (dateFormat != null && !dateFormat.isEmpty()) {
             gson = new GsonBuilder().setDateFormat(dateFormat).create();
@@ -56,11 +85,6 @@ public class GenericWsPlus extends GenericWs {
         LOGGER.info(String.format("code: %s message: %s", code, message));
 
         return response;
-    }
-
-    protected Response generateResponse(String prefix, ResponseCode responseCode, Object obj, int httpStatusCode,
-                                        MessageSource messageSource, Locale locale) {
-        return generateResponse(prefix, responseCode, obj, null, httpStatusCode, messageSource, locale);
     }
 
     protected Response validateRequestor(HttpServletRequest request, String wsKey, MessageSource messageSource, Locale locale) {
