@@ -57,8 +57,8 @@
         <!-- Test -->
         <!--<junit.version>4.11</junit.version>-->
 
-        <!-- FireStore -->
-        <google-cloud-firestore>1.7.0</google-cloud-firestore>
+<!--        &lt;!&ndash; FireStore &ndash;&gt;-->
+<!--        <google-cloud-firestore>1.7.0</google-cloud-firestore>-->
 
     </properties>
 
@@ -111,6 +111,14 @@
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${appengine.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- google-api-client -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.30.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -212,12 +220,12 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Firestore -->
-        <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>google-cloud-firestore</artifactId>
-            <version>${google-cloud-firestore}</version>
-        </dependency>
+<!--        &lt;!&ndash; Firestore &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.cloud</groupId>-->
+<!--            <artifactId>google-cloud-firestore</artifactId>-->
+<!--            <version>${google-cloud-firestore}</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

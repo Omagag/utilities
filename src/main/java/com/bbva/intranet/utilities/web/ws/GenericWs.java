@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class GenericWs {
 
-    private static final Gson gson = new Gson();
+    protected static Gson gson = new Gson();
 
 	protected static final Logger LOGGER = Logger.getLogger(GenericWs.class.getName());
 
@@ -20,6 +20,7 @@ public class GenericWs {
 
     public static final String CHARSET_UTF8 = ";charset=UTF-8";
 
+    @Deprecated
     public Response validateRequestor(String requestor, MessageSource messageSource, Locale locale) {
         Response response = null;
 
